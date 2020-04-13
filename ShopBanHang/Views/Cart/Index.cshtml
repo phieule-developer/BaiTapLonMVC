@@ -1,0 +1,152 @@
+﻿
+@{
+    ViewBag.Title = "Giỏ hàng";
+    Layout = "~/Views/Shared/_layout.cshtml";
+}
+    <div class="px-4 px-lg-0" style="background-color:white;padding-top:80px">
+        <div class="pb-5">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-12 p-5 bg-white rounded shadow-sm mb-5">
+                
+                                <div class="table-responsive">
+                                    <table class="table">
+                                        <thead class="headd">
+
+
+
+                                        </thead>
+                                        <tbody class="bodyy">
+                                            
+                                        </tbody>
+                                    </table>
+                                </div>
+                                <hr />
+                                <a href="/Home/Index" class="btn_1">Tiếp tục mua sắm</a>
+                                <a href="/CheckOut/Index" style="float:right" class="btn_1">Tiến hành đặt hàng</a>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+@section myscript{
+    <script>
+        $(document).ready(function () {
+            // đưa giỏ hàng lên 
+            if (localStorage.getItem("cart") !== null) {    
+                var cart = [];
+                $(".headd").html(`
+                                            <tr>
+                                                <th scope="col" class="border-0 bg-light">
+                                                    <div class="p-2 px-3 text-uppercase">Sản phẩm</div>
+                                                </th>
+                                                <th scope="col" class="border-0 bg-light">
+                                                    <div class="py-2 text-uppercase">Giá</div>
+                                                </th>
+                                                <th scope="col" class="border-0 bg-light">
+                                                    <div class="py-2 text-uppercase">Số lượng</div>
+                                                </th>
+                                                <th scope="col" class="border-0 bg-light">
+                                                    <div class="py-2 text-uppercase">Size</div>
+                                                </th>
+                                                <th scope="col" class="border-0 bg-light">
+                                                    <div class="py-2 text-uppercase">Thành tiền</div>
+                                                </th>
+                                                <th scope="col" class="border-0 bg-light">
+                                                    <div class="py-2 text-uppercase">Xóa</div>
+                                                </th>
+
+                                            </tr>`);
+
+                cart = JSON.parse(localStorage.getItem("cart"));
+                var total = 0;
+                for (var i in cart) {
+                    total += Number(cart[i].Amount_Product) * Number(cart[i].Current_Price);
+                    $(".bodyy").append(`<tr>
+                                                    <td scope="row" class="border-0">
+                                                        <div class="p-2">
+                                                            <img src="${cart[i].Image_Product}" alt="" width="70" class="img-fluid rounded shadow-sm">
+                                                            <div class="ml-3 d-inline-block align-middle">
+                                                                <h5 class="mb-0">
+                                                                    <p class="text-dark d-inline-block">${cart[i].Name_Product}</p>
+                                                                </h5>
+                                                                <span class="text-muted font-weight-normal font-italic d-block">Danh mục:${cart[i].Name_Category}</span>
+                                                            </div>
+                                                        </div>
+                                                    </td>
+                                                    <td class="border-0 align-middle current_price"><strong>${cart[i].Current_Price}</strong></td>
+                                                    <td class="ID_Product" style="display:none">${cart[i].ID_Product}</td>
+                                                    <td class="border-0 align-middle">
+                                                            <input type="number" min="1" max="100" value="${cart[i].Amount_Product}" aria-label="Search" class="form-control" style="width: 100px"></td>
+                                                    <td class="border-0 align-middle size">${cart[i].Size_Product}</td >
+                                                    <td class="align-middle price_total"><strong>${Number(cart[i].Amount_Product) * Number(cart[i].Current_Price)}</strong></td>
+                                                    <td class="border-0 align-middle"><a href="#" class="text-dark"><i class="fa fa-trash"></i></a></td>
+                                                </tr>`)
+                }
+                $(".bodyy").append(`<tr>
+
+                                                <td colspan="3" style="text-align:center"><strong>TỔNG THANH TOÁN</strong></td>
+                                                <td colspan="2"><strong id="total_total"></strong></td>
+                                            </tr>`)
+                $("#total_total").html(total);
+            }
+            else {
+                // rỗng nếu chưa có giỏ hàng
+                $(".container").html(` <div class="bg-light rounded-pill px-4 py-3 text-uppercase font-weight-bold">Giỏ hàng hiện tại</div>
+                                <div class="alert alert-info">
+                                    <p>Giỏ hàng trống... </p>
+                                </div>
+                                <a href="/Home/Index" class="btn_1">Bắt đầu mua hàng nào</a>`)
+            }
+
+
+
+
+            $(".text-dark").click(function () {
+                // xóa sản phẩm khỏi giỏ hàng
+                var ID = $(this).parent().parent().children(".ID_Product").html();
+                var size = $(this).parent().parent().children(".size").html();
+                var cart = [];
+                cart = JSON.parse(localStorage.getItem("cart"));
+                for (var i in cart)
+                {
+                    if (ID == cart[i].ID_Product && size == cart[i].Size_Product) {
+                        cart.splice(i, 1);
+                        localStorage.setItem("cart", JSON.stringify(cart))
+                    }
+                }
+                window.location.href="https://localhost:44399/Cart/Index"
+            })
+            // thay đổi số lượng sản phẩm trong giỏ hàng
+            $(".form-control").change(function () {
+                var current_price = $(this).parent().parent().children(".current_price").children().html();
+                var amount = $(this).val();
+                $(this).parent().parent().children(".price_total").children().html(Number(current_price) * Number(amount));
+                var ID_Product = $(this).parent().parent().children(".ID_Product").html();
+                var SizeProduct= $(this).parent().parent().children(".size").html()
+                var cart = [];
+                var total = 0;
+                cart = JSON.parse(localStorage.getItem("cart"));
+                for (var i in cart)
+                {
+                    if (ID_Product == cart[i].ID_Product && SizeProduct == cart[i].Size_Product)
+                    {
+                        cart[i].Amount_Product = Number(amount);
+                        localStorage.setItem("cart", JSON.stringify(cart));
+                        cart = JSON.parse(localStorage.getItem("cart"));
+                         for (var i in cart)
+                        {
+                           total += Number(cart[i].Amount_Product) * Number(cart[i].Current_Price);
+                        }
+                         $("#total_total").html(total);
+                        return;
+                    }
+                }
+                
+
+
+            })
+        });
+    </script>
+    }

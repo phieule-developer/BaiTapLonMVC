@@ -1,0 +1,140 @@
+﻿
+@{
+    ViewBag.Title = "Chi tiết số lượng sản phẩm - Thời trang 360";
+    Layout = "~/Areas/Admin/Views/Shared/Layout_Admin.cshtml";
+}
+@{
+    var detailProduct = ViewBag.detailProduct as List<ShopBanHang.Areas.Admin.Models.InventoryProduct>;
+    var i = 1;
+}
+<div class="col col-xl-12">
+    <div class="table-info table-responsive">
+        <table class="table table-hover">
+            <thead>
+                <tr>
+                    <th>Số thứ tự</th>
+                    <th>Tên sản phẩm</th>
+                    <th>Kích cỡ</th>
+                    <th>Số lượng</th>
+                    <th>Hành động</th>
+                </tr>
+            </thead>
+            <tbody>
+                @{ foreach (var item in detailProduct)
+                    {
+                        <tr>
+                            <td>@(i++)<span style="display:none" class="ID_Size">@item.ID_Size</span></td>
+                            <td><img src="@item.Image_Product" height="30"><span class="NameProduct">@item.Name_Product</span></td>
+                            <td>@item.Size_Number</td>
+                            <td>@item.Amount_Product</td>
+                            <td><a href="#" class="btn btn-primary addProduct" data-toggle="modal" data-target="#modalSubscriptionForm"> Thêm </a>&nbsp;<a class="btn btn-primary historyProduct" data-toggle="modal" data-target="#basicExampleModal">Lịch sử</a></td>
+                        </tr>
+                    }
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
+
+
+
+@*  Thêm số lượng sản phẩm *@
+<div class="modal fade" id="modalSubscriptionForm" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header text-center">
+                <h4 class="modal-title w-100 font-weight-bold">Thêm sản phẩm</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <h4 id="nProduct" style="text-align:center;color:blue"></h4>
+            <form method="post" action="/Admin/Inventory/AddProduct">
+                <div class="form modal-body mx-3">
+                    <div class="md-form mb-5">
+                        <input style="display:none" class="inputID_Size" name="ID_Size" />
+                        <label data-error="wrong" data-success="right" for="form3">Số lượng</label>
+                        <input type="number" name="numProduct" min=1 id="form3" class="form-control validate">
+
+                    </div>
+                    <div class="modal-footer mb-5 d-flex justify-content-center">
+                        <button class="btn btn-danger" type="submit">Cập nhật</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+@* Lịch sử thêm sản phẩm *@
+
+<!-- Modal -->
+<div class="modal fade" id="basicExampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+     aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">5 lần giao dịch gần nhất</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>Số thứ tự</th>
+                            <th>Ngày thêm</th>
+                            <th>Số lượng</th>
+                        </tr>
+                    </thead>
+                    <tbody class="listHistory">
+                        @*<tr>
+                            <th>2</th>
+                            <td>@DateTime.Now</td>
+                            <td>200</td>
+                        </tr>*@
+                    </tbody>
+                </table>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" data-dismiss="modal">Đóng</button>
+            </div>
+        </div>
+    </div>
+</div>
+@section myscript{
+    <script>
+        $(document).ready(function () {
+            // Thêm sản phẩm
+            $(".addProduct").click(function () {
+                var nameProduct = $(this).parent().parent().children().children(".NameProduct").html();
+                $("#nProduct").html(nameProduct);
+                $(".inputID_Size").val($(this).parent().parent().children().children(".ID_Size").html());
+            })
+        });   // Thêm sản phẩm
+
+
+        // Lịch sử thêm sản phẩm
+        $(".historyProduct").click(function () {
+            var Id_Size = $(this).parent().parent().children().children(".ID_Size").html();
+            $.ajax({
+                url: "/Admin/Inventory/Historyyy?Id_Size=" + Id_Size,
+                
+                success: function (result) {
+                    var listHistory = [];
+                    var i = 1;
+                    result.map(function (val) {
+                        var d = new Date(Number(val.Add_Date.substring(6, val.Add_Date.length - 2)));
+                        listHistory.push('<tr><th>' + (i++) + '</th><td>' + d.toLocaleString() + '</td><td>' + val.Number_Product + '</td></tr>')
+                    })
+                    $(".listHistory").html(listHistory);
+                }
+            })
+
+
+        });
+    </script>
+
+
+
+}

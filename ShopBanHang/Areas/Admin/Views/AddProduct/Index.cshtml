@@ -1,0 +1,115 @@
+﻿
+@{
+    ViewBag.Title = "Thêm sản phẩm - Thời trang 360";
+    Layout = "~/Areas/Admin/Views/Shared/Layout_Admin.cshtml";
+}
+@{
+    var category = ViewBag.category as List<ShopBanHang.Database.Category>;
+}
+<div class="col col-xl-3"></div>
+    <div class="col col-xl-4">
+        <form role="form" method="post" enctype="multipart/form-data" action="/Admin/AddProduct/Index">
+
+            <label for="productFashion" class="loginFormElement">Thời trang</label>
+            <select class="form-control" id="productFashion">
+                <option value=0>Lựa chọn</option>
+                <option value=1>Thời trang nam</option>
+                <option value=2>Thời trang nữ</option>
+            </select>
+
+            <label for="productProduct" class="loginFormElement">Hạng mục</label>
+
+            <select class="form-control" name="ID_Category" id="productProduct">
+            </select>
+
+            <div class="form-group">
+                <label for="nameProduct" class="loginFormElement">Tên sản phẩm</label>
+                <input class="form-control" name="Name_Product" placeholder="Tên sản phẩm" id="nameProduct" />
+            </div>
+            <label>Số lượng</label>
+            <div class="table-responsive">
+
+                <table class="table table-bordered table-striped table-highlight">
+                    <thead>
+                        <tr>
+                            <th>M</th>
+                            <th>L</th>
+                            <th>XL</th>
+                            <th>XXL</th>
+
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><input name="sizeM" style="width:40px" type="text" value=0 /></td>
+                            <td><input name="sizeL" style="width:40px" type="text" value=0 /></td>
+                            <td><input name="sizeXL" style="width:40px" type="text" value=0 /></td>
+                            <td><input name="sizeXXL" style="width:40px" type="text" value=0 /></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="form-group">
+                <label for="productprice" class="loginFormElement">Giá sản phẩm</label>
+                <input class="form-control" name="Current_Price" id="productprice" placeholder="Giá sản phẩm" type="text">
+            </div>
+
+            <div class="form-group">
+                <label for="productpricekm" class="loginFormElement">Giá khuyến mãi</label>
+                <input class="form-control" placeholder="Giá khuyến mãi" name="Promotion_Price" id="productpricekm" type="text">
+            </div>
+            <div class="form-group">
+                <label class="control-label">Ảnh<i class="fa fa-image"></i></label>&nbsp;<span id="nameproducttt"></span>
+                <input style="display:none" id="image"  accept="image/png, image/jpeg" name="Image_Product" type="file" /><span id="Name_Image"></span>
+                <br />
+                <br />
+            </div>
+
+            <div class="form-group">
+                <label class="loginformelement" for="productdescription">Mô tả sản phẩm</label>
+                <textarea id="productdescription" name="Description_Product" class="form-control input-lg" placeholder="Mô tả sản phẩm" type="text"></textarea><div class="container">
+                </div>
+
+                <button type="submit" id="loginSubmit" class="btn btn-success loginFormElement">Thêm sản phẩm</button>
+
+            </div>
+        </form>
+        <div id="UploadImage" style="position:relative;bottom:205px">
+            <button class="btn btn-info">Upload ảnh</button>
+        </div>
+    </div>
+<div class="col col-xl-3">
+
+</div>
+@section myscript{
+    <script>
+        $(document).ready(function () {
+            $("#productFashion").change(function () {
+                var category = $("#productFashion").val();
+                $.ajax({
+                    url: "/Admin/AddProduct/Fashion?category="+category,
+                    data: { category: category },
+                    
+                    success: function (result) {
+
+                        var dis = [];
+                        dis.push(" <option value=0>Lựa chọn</option>");
+                        result.map(function (val) {
+                            dis.push('<option value="' + val.ID_Category + '">' + val.Name_Category + '</option>');
+                        })
+                        $("#productProduct").html(dis)
+                    }
+
+                    })
+
+            });
+            $("#UploadImage").click(function () {
+                $("#image").trigger('click');
+                $("#image").change(function () {
+                    $("#nameproducttt").html($("#image")[0].files[0].name);
+                })
+            })
+            
+        })
+    </script>
+}

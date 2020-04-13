@@ -1,0 +1,168 @@
+﻿
+@{
+    Layout = null;
+}
+@{ 
+    var amount = Session["Cart"] as List<ShopBanHang.Models.Cartt>;
+}
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>@ViewBag.Title</title>
+    <link rel="icon" href="~/Content/img/favicon.png">
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="~/Content/css/bootstrap.min.css">
+    <!-- animate CSS -->
+    <link rel="stylesheet" href="~/Content/css/animate.css">
+    <!-- owl carousel CSS -->
+    <link rel="stylesheet" href="~/Content/css/owl.carousel.min.css">
+    <!-- font awesome CSS -->
+    <link rel="stylesheet" href="~/Content/css/all.css">
+    <!-- flaticon CSS -->
+    <link rel="stylesheet" href="~/Content/css/flaticon.css">
+    <link rel="stylesheet" href="~/Content/css/themify-icons.css">
+    <!-- font awesome CSS -->
+    <link rel="stylesheet" href="~/Content/css/magnific-popup.css">
+    <!-- swiper CSS -->
+    <link rel="stylesheet" href="~/Content/css/slick.css">
+    <!-- style CSS -->
+    <link rel="stylesheet" href="~/Content/css/style.css">
+    <link href="~/Content/css/fontawesome.min.css" rel="stylesheet" />
+    <link href="~/Content/css/font-awesome.min.css" rel="stylesheet" />
+    @RenderSection("mycss", false)
+</head>
+       
+<body>
+    <!--::header part start::-->
+    <header class="main_menu home_menu">
+        <div class="container-fluid">
+            <div class="row align-items-center justify-content-center">
+                <div class="col-xl-11">
+                    <nav class="navbar navbar-expand-lg navbar-light">
+                        <a class="navbar-brand" href="/Home/Index">Thời trang 360</a>
+                        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                            <span class="menu_icon"><i class="fa fa-bars"></i></span>
+                        </button>
+
+                        <div class="collapse navbar-collapse main-menu-item" id="navbarSupportedContent">
+                            <ul class="navbar-nav">
+                                <li class="nav-item">
+                                    <a class="nav-link" id="home_page" href="/Home/Index">Trang chủ</a>
+                                </li>
+                                <li class="nav-item dropdown">
+                                    <a class="nav-link dropdown-toggle" href="/MenFashion/Index" id="navbarDropdown_1" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                        Thời trang nam
+                                    </a>
+                                    <div class="dropdown-menu" aria-labelledby="navbarDropdown_1">
+                                        <a class="dropdown-item" href="#">Áo thun nam ngắn tay</a>
+                                        <a class="dropdown-item" href="#">Áo thun nam dài tay</a>
+                                        <a class="dropdown-item" href="#">Áo sơ mi nam ngắn tay</a>
+                                        <a class="dropdown-item" href="#">Áo sơ mi nam dài tay</a>
+                                        <a class="dropdown-item" href="#">Quần jeans nam</a>
+                                        <a class="dropdown-item" href="#">Quần short nam</a>
+                                    </div>
+                                </li>
+                                <li class="nav-item dropdown">
+                                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown_2" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                        Thời trang nữ
+                                    </a>
+                                    <div class="dropdown-menu" aria-labelledby="navbarDropdown_2">
+                                        <a class="dropdown-item" href="#">Áo thun nữ ngắn tay</a>
+                                        <a class="dropdown-item" href="#">Áo thun nữ dài tay</a>
+                                        <a class="dropdown-item" href="#">Áo sơ mi nữ ngắn tay</a>
+                                        <a class="dropdown-item" href="#">Áo sơ mi nữ dài tay</a>
+                                        <a class="dropdown-item" href="#">Đầm</a>
+                                        <a class="dropdown-item" href="#">Váy</a>
+                                    </div>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" href="#" id="_contact">Liên hệ</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" style="padding-left:250px" id="_cart_" href="/Cart/Index">
+                                        Giỏ hàng &nbsp;
+                                                <span class="badge badge-primary">0</span>
+                                    </a>
+                                </li>
+                                @{
+                                    var member = ShopBanHang.Utils.Xsession.Member;
+                                    var accFb = Session["Name"];
+                                    if (member == null && accFb == null)
+                                    {
+                                        <li class="nav-item">
+                                            <a class="nav-link" id="sign_in" href="/Account/LogIn">Đăng nhập</a>
+                                        </li>
+                                        <li class="nav-item">
+                                            <a class="nav-link" id="sign_up" href="/Account/SignUp">Tạo tài khoản</a>
+                                        </li>
+                                    }
+                                    else if (member == null && accFb != null)
+                                    {
+                                        <li class="nav-item">
+                                            <p class="nav-link">Hi , @Session["Name"] &nbsp;</p>
+                                        </li>
+                                        <li class="nav-item">
+                                            <a class="nav-link" id="sign_up" href="/Account/LogOut">Đăng xuất</a>
+                                        </li>
+                                    }
+                                    else if (member != null && accFb == null)
+                                    {
+                                                                <li class="nav-item dropdown">
+                                                                    <a class="nav-link dropdown-toggle" href="#" id="navbarName" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">@member.Name_Member&nbsp;</a>
+                                                                    <div class="dropdown-menu" aria-labelledby="navbarName">
+                                                                        <a class="dropdown-item" href="#">Thông tin tài khoản</a>
+                                                                        <a class="dropdown-item" href="#">Đơn hàng của tôi</a>
+                                                                        <a class="dropdown-item" href="#">Đổi mật khẩu</a>
+                                                                        <a class="dropdown-item" href="/Account/LogOut">Đăng xuất</a>
+                                                                    </div>
+                                                                
+                                                                </li>
+                                                                
+                                                            }
+                                }
+
+                            </ul>
+                        </div>
+
+                    </nav>
+                </div>
+            </div>
+        </div>
+
+    </header>
+    @RenderBody()
+    <br />
+    <!-- Footer -->
+    <footer class="page-footer font-small blue">
+        <div style="color:blue" class="footer-copyright text-center py-3">
+            © 2019 Phiêu Lê _ ANHTTT53 _ HVKTQS
+        </div>
+    </footer>
+    <!-- Footer -->
+    <script src="~/Content/js/jquery-1.12.1.min.js "></script>
+    <script src="~/Content/js/popper.min.js "></script>
+    <script src="~/Content/js/bootstrap.min.js "></script>
+    <script src="~/Content/js/jquery.magnific-popup.js "></script>
+    <script src="~/Content/js/swiper.min.js "></script>
+    <script src="~/Content/js/mixitup.min.js "></script>
+    <script src="~/Content/js/owl.carousel.min.js "></script>
+    <script src="~/Content/js/jquery.nice-select.min.js "></script>
+    <script src="~/Content/js/slick.min.js "></script>
+    <script src="~/Content/js/jquery.counterup.min.js "></script>
+    <script src="~/Content/js/waypoints.min.js "></script>
+    <script src="~/Content/js/contact.js "></script>
+    <script src="~/Content/js/jquery.ajaxchimp.min.js "></script>
+    <script src="~/Content/js/jquery.form.js "></script>
+    <script src="~/Content/js/jquery.validate.min.js "></script>
+    <script src="~/Content/js/mail-script.js "></script>
+    <script src="~/Content/js/custom.js "></script>
+    @RenderSection("myscript", false)
+    <script>
+            var cart = [];
+            cart = JSON.parse(localStorage.getItem("cart"));
+            $(".badge-primary").html(cart.length)
+    </script>
+</body>
+</html>

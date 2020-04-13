@@ -1,0 +1,255 @@
+﻿
+@{
+    ViewBag.Title = "Chi tiết sản phẩm";
+    Layout = "~/Views/Shared/_layout.cshtml";
+}
+@{
+    var product = ViewBag.product as List<ShopBanHang.Models.displayProduct>;
+    var relateProduct = ViewBag.relateProduct as List<ShopBanHang.Database.Product>;
+    var comment = ViewBag.comment as List<ShopBanHang.Database.Comment>;
+}
+@section mycss{
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css" />
+}
+    <div class="product_image_area" style="padding-top:80px">
+        <div class="container">
+            <div class="row s_product_inner">
+                <div class="col-lg-5">
+                    <div class="product_slider_img">
+                        <div id="vertical">
+                            <div data-thumb="img/product_details/prodect_details_1.png">
+                                <img class="image_product" src="@product[0].Image_Product" />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-6 offset-lg-1">
+                    <div class="s_product_text" style="padding-top:50px">
+                        <h3 class="name_product">@product[0].Name_Product</h3>
+                        <h2 class="cost_product">@product[0].Current_Price</h2>
+                        <ul class="list">
+                            <li>
+                                <a class="active" href="#">
+                                    <span>Danh mục</span>:<span class="categoryyy"> @product[0].Name_Category </span>
+                                </a>
+                            </li>
+                            <li>
+                                <a class="active" href="#">
+                                    <span>Trạng thái</span>:   Còn hàng
+                                </a>
+                            </li>
+                        </ul>
+                        <div data-size="" class="sizeProduct">
+                            <p>Size</p>
+                            <button type="button" class="btn btn-light size">M</button>
+                            <button type="button" class="btn btn-light size">L</button>
+                            <button type="button" class="btn btn-light size">XL</button>
+                            <button type="button" class="btn btn-light size">XXL</button>
+                        </div>
+                        <div>
+                            <p> Mô tả: </p>
+                            <span> @product[0].Description_Product </span>
+                        </div>
+                        <div class="card_area">
+                            <div class="product_count d-inline-block">
+                                <span class="inumber-decrement"> <i class="ti-minus"></i></span>
+                                <input class="input-number" type="text" value="1" min=1>
+                                <span class="number-increment"> <i class="ti-plus"></i></span>
+                            </div>
+                            <div class="add_to_cart">
+                                <span id="ID_Product" style="display:none">@product[0].ID_Product</span>
+                                <a href="#" class="btn_3 addCart">Thêm vào giỏ hàng</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <section class="product_description_area">
+        <div class="container">
+            <ul class="nav nav-tabs" id="myTab" role="tablist">
+                <li class="nav-item">
+                    <a class="nav-link active" id="contact-tab" data-toggle="tab" href="#contact" role="tab" aria-controls="review"
+                       aria-selected="false">Bình luận</a>
+                </li>
+            </ul>
+            <div>
+                <div class="row">
+                    <div class="col-lg-6">
+                        <br />
+                        <div class="comment_list">
+                            <div class="review_item">
+                                @{
+                                    if (comment.Count() != 0)
+                                    {
+                                        foreach (var item in comment)
+                                        {
+                                            <div class="media">
+                                                <div class="media-body">
+                                                    <h4>@item.Name</h4>
+                                                    <h5>@item.Date_Comment</h5>
+                                                    <p>
+                                                        @item.Content_Comment
+                                                    </p>
+                                                </div>
+                                            </div>
+                                            <br />
+                                            <br />
+                                        }
+                                    }
+                                    else
+                                    {
+                                        <h3> Sản phẩm chưa có bình luận nào </h3>
+                                    }
+                                }
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-6">
+                        <div class="review_box">
+                            <h4>Bình luận sản phẩm</h4>
+                            <form class="row contact_form" method="post" action="/DetailProduct/CommentProduct" novalidate="novalidate">
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        <input type="text" class="form-control" name="Name" pattern="[a-zA-Z0-9]+" placeholder="Họ và tên" />
+                                    </div>
+                                </div>
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        <input type="email" class="form-control" name="Email" placeholder="Email" />
+                                    </div>
+                                </div>
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        <input type="text" class="form-control" name="Phone" placeholder="Số điện thoại" />
+                                    </div>
+                                </div>
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        <textarea class="form-control" name="Content_Comment" placeholder="Bình luận"></textarea>
+                                    </div>
+                                </div>
+
+                                <div class="form-group" style="display:none">
+                                    <input class="form-control" name="ID_Product" value="@product[0].ID_Product">
+                                </div>
+
+                                <div class="col-md-12 text-right">
+                                    <button type="submit" value="submit" class="btn_3">
+                                        Bình luận
+                                    </button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    @if (relateProduct != null)
+    {
+        <section class="product_list best_seller padding_bottom">
+            <div class="container">
+                <div class="row justify-content-center">
+                    <div class="col-lg-12">
+                        <div class="section_tittle text-center">
+                            <h2>Sản phẩm liên quan</h2>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    @foreach (var item in relateProduct)
+                    {
+                        <div class="col-lg-3 col-sm-6">
+                            <div class="single_category_product">
+                                <div class="single_category_img">
+                                    <img src="@item.Image_Product" alt="">
+                                    <div class="category_product_text">
+                                        <a href="/DetailProduct/Index?ID=@item.ID_Product"><h5><strong class="relateProduct">@item.Name_Product</strong></h5></a>
+                                        <p>@item.Current_Price</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    }
+                </div>
+            </div>
+        </section>
+}
+@section myscript{
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            // Hàm chọn size
+            $(".size").click(function () {
+                $(".size").attr('class', 'btn btn-light size');
+                $(this).attr('class', 'btn btn-secondary size');
+                var size = $(this).html();
+                $(this).parent().attr('data-size', size);
+            })
+
+            // Thêm vào giỏ hàng
+            $(".addCart").click(async function () {
+
+                if($(".sizeProduct").attr('data-size') === "") // Kiểm tra xem đã được chọn chưa
+                {   
+                    alert("Bạn vui lòng chọn size trước");
+                }
+                else
+                {
+                    toastr.success("Thêm vào giỏ hàng thành công")
+                     
+                   
+                    var id = $(this).parent().children("#ID_Product").html();
+                    var sizeProductt = $(".sizeProduct").attr('data-size');
+                    var amount = $(".input-number").val();
+                   
+                    await $.ajax({
+                        url: "/Cart/Index?id=" + id + "sizeProductt=" + sizeProductt + "amount=" + amount,
+                        data: { id: id, sizeProductt: sizeProductt, amount: amount },
+                        type: "POST"
+                    });
+                    
+
+
+                        
+                   //  Dùng Localstorge lưu sản phẩm xuống client
+                    var product ={
+                        ID_Product: $(this).parent().children("#ID_Product").html(),
+                        Name_Product: $(".name_product").html(),
+                        Current_Price: $(".cost_product").html(),
+                        Size_Product: $(".sizeProduct").attr('data-size'),
+                        Amount_Product: $(".input-number").val(),
+                        Image_Product: $(".image_product").attr('src'),
+                        Name_Category: $(".categoryyy").html()
+                    }
+                    var cart=[]
+
+                        if(localStorage.getItem("cart") === null)
+                        {
+                            cart.push(product);
+                        }
+                        else
+                        {
+                            cart = JSON.parse(localStorage.getItem("cart")) 
+                            for (var i in cart)
+                            {
+                                    if(cart[i].ID_Product == product.ID_Product && cart[i].Size_Product == product.Size_Product)
+                                    {
+                                        cart[i].Amount_Product =Number(cart[i].Amount_Product) + Number(product.Amount_Product)+""
+                                        localStorage.setItem("cart", JSON.stringify(cart))
+                                        return null;
+                                    }
+                            }
+                            cart.push(product);
+                        }
+                    localStorage.setItem("cart", JSON.stringify(cart))
+                }
+                $(".badge-primary").html(cart.length)
+            });
+        })
+    </script>
+
+
+}

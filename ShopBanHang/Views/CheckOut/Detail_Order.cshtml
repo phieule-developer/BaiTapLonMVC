@@ -1,0 +1,130 @@
+﻿
+@{
+    ViewBag.Title = "Detail_Order";
+    Layout = "~/Views/Shared/_layout.cshtml";
+}
+ <script src="~/Content/js/jquery-1.12.1.min.js "></script>
+<script>
+    var data = localStorage.getItem("cart")
+    console.log("vào đây")
+    $.ajax({
+        url: "/CheckOut/Detail_Order?cart=" + data,
+        type: "POST",
+        success: function () {
+
+        }
+    })
+</script>
+@{
+    var order_detail = ViewBag.detailOrder as List<ShopBanHang.Models.ConfirmOrder>;
+}
+    <div class="content">
+        @if (order_detail != null)
+        {
+            <hr />
+            <br />
+            <br />
+            <br />
+            <section class="confirmation_part">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <div class="confirmation_tittle">
+                                <span>Đặt hàng thành công</span>
+                            </div>
+                        </div>
+                        @{
+                            <div class="col-lg-6 col-lx-2">
+                                <div class="single_confirmation_details">
+                                    <h4>Thông tin đơn hàng</h4>
+                                    <ul>
+                                        <li>
+                                            <p>Tên khách hàng</p><span>:  @order_detail[0].Name</span>
+                                        </li>
+                                        <li>
+                                            <p>Số điện thoại</p><span> :  @order_detail[0].Phone</span>
+                                        </li>
+                                        <li>
+                                            <p>Mã đơn hàng</p><span>   :  @order_detail[0].ID_Order</span>
+                                        </li>
+                                        <li>
+                                            <p>Thời gian đặt</p><span> :  @order_detail[0].Date_Order</span>
+                                        </li>
+                                        <li>
+                                            <p>Tổng thanh toán:</p><span>:  @ViewBag.total</span>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        }
+                        <div class="col-lg-6 col-lx-4">
+                            <div class="single_confirmation_details">
+                                <h4>Địa chỉ nhận hàng</h4>
+                                <ul>
+                                    <li>
+                                        <p>Số nhà_đường_Phường/Xã</p><span>: @order_detail[0].Address_Detail </span>
+                                    </li>
+                                    <li>
+                                        <p>Quận/Huyện</p><span>: @order_detail[0].Address_District</span>
+                                    </li>
+                                    <li>
+                                        <p>Tỉnh</p><span>: @order_detail[0].Address_Province</span>
+                                    </li>
+                                    <li>
+                                        <p>Ghi chú</p><span>: @order_detail[0].Note</span>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <div class="order_details_iner">
+                                <h3>Chi tiết đơn hàng</h3>
+                                <table class="table table-borderless">
+                                    <thead>
+                                        <tr>
+                                            <th scope="col" colspan="2">Sản phẩm</th>
+                                            <th scope="col">Size</th>
+                                            <th scope="col">Số lượng</th>
+                                            <th scope="col">Thành tiền</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @foreach (var item in order_detail)
+                                        {
+                                            <tr>
+                                                <th colspan="2"><span>@item.Name_Product</span></th>
+                                                <th>@item.Size_Product</th>
+                                                <th>@item.Amount_Product</th>
+                                                <th> <span>@item.Total</span></th>
+                                            </tr>
+                                        }
+                                    </tbody>
+                                    <tfoot>
+                                        <tr>
+                                            <th scope="col" colspan="3">Tổng thanh toán</th>
+                                            <th scope="col">@ViewBag.total</th>
+                                        </tr>
+                                    </tfoot>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            <br />
+            <br />
+            <div class="col col-10" style="text-align:right">
+                <a href="/Home/Index"  class="btn btn-success">Quay lại trang chủ</a>
+                <br />
+            </div>
+        }
+        else
+        {
+            <div style="text-align:center;padding-top:100px;padding-bottom:100px">
+                <h4> <strong>Chưa có đơn hàng nào</strong></h4>
+                <a href="/Home/Index">Quay lại trang chủ</a>
+            </div>
+        }
+    </div>

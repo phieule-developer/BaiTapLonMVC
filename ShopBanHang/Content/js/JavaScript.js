@@ -1,0 +1,1 @@
+﻿$("#menu-toggle").click(function (n) { n.preventDefault(), $("#wrapper").toggleClass("toggled") }), $(function () { new Swiper(".swiper-container", { loop: !0, pagination: ".swiper-pagination", paginationClickable: !0, nextButton: ".swiper-button-next", prevButton: ".swiper-button-prev" }) });

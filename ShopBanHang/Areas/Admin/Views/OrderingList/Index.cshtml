@@ -1,0 +1,50 @@
+﻿@{
+    ViewBag.Title = "Danh sách đơn hàng đang chờ - Thời trang 360";
+    Layout = "~/Areas/Admin/Views/Shared/Layout_Admin.cshtml";
+}
+@{
+    var OrderList = ViewBag.OrderList as List<ShopBanHang.Models.ConfirmOrder>;
+    var infoOrder = ViewBag.infoOrder as List<ShopBanHang.Database.Order>;
+    var i = 1;
+}
+<div class="col-xl-12">
+    <div class="card">
+        <div class="card-header">
+            <h4 class="card-title">Danh sách đơn hàng</h4>
+        </div>
+        <div class="card-body">
+            <div class="table-responsive">
+                <table class="table">
+                    <thead class=" text-primary">
+                        <tr>
+                            <th>Số thứ tự</th>
+                            <th>Mã đơn hàng</th>
+                            <th>Tên khách hàng</th>
+                            <th>Số điện thoại</th>
+                            <th>Địa chỉ</th>
+                            <th>Ngày đặt</th>
+                            <th>Hành động</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in infoOrder)
+                        {
+                            <tr>
+                                <td>@(i++)</td>
+                                <td>@item.ID_Order</td>
+                                <td>@item.Name</td>
+                                <td>@item.Phone</td>
+                                <td>@item.Address_Detail -  @item.Address_District - @item.Address_Province</td>
+                                <td>@item.Date_Order</td>
+                                <td><a href="/Admin/OrderingList/ConfirmOrder?ID_Order=@item.ID_Order" class="btn btn-success">Xác nhận</a> &nbsp; <a class="btn btn-success" href="/Admin/OrderingList/DetailOrder?ID_Order=@item.ID_Order">Chi tiết</a> </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+@section myscript{
+    <script src='https://kit.fontawesome.com/a076d05399.js'></script>
+}

@@ -1,0 +1,103 @@
+﻿
+@{
+    ViewBag.Title = "Quản lý của hàng- Thời trang 360";
+    Layout = "~/Areas/Admin/Views/Shared/Layout_Admin.cshtml";
+}
+<div class="content">
+    <div class="row">
+        <div class="col col-xl-4">
+            <div class="card card-stats">
+                <div class="card-body ">
+                    <div class="row">
+                        <div class="col col-md-2">
+                            <div class="icon-big text-center icon-warning">
+                                <i class="nc-icon nc-globe text-warning"></i>
+                            </div>
+                        </div>
+                        <div class="col col-md-10">
+                            <div class="numbers">
+                                <p class="card-category">Số đơn hàng trong tuần</p>
+                                <p class="card-title counter">@ViewBag.amountOrder</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-footer ">
+                    <hr>
+                    <div class="stats">
+                        <i class="fa fa-refresh"></i> Danh sách đơn hàng đang chờ
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col col-xl-4">
+            <div class="card card-stats">
+                <div class="card-body ">
+                    <div class="row">
+                        <div class="col col-md-2">
+                            <div class="icon-big text-center icon-warning">
+                                <i class="nc-icon nc-money-coins text-success"></i>
+                            </div>
+                        </div>
+                        <div class="col col-md-10">
+                            <div class="numbers">
+                                <p class="card-category">Số tiền bán được trong tuần</p>
+                                <p class="card-title counter">@ViewBag.total</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-footer ">
+                    <hr>
+                    <div class="stats">
+                        <i class="fa fa-calendar-o"></i> Danh sách đơn hàng
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col col-xl-4">
+            <div class="card card-stats">
+                <div class="card-body ">
+                    <div class="row">
+                        <div class="col col-md-2">
+                            <div class="icon-big text-center icon-warning">
+                                <i class="nc-icon nc-vector text-danger"></i>
+                            </div>
+                        </div>
+                        <div class="col col-md-10">
+                            <div class="numbers">
+                                <p class="card-category">Số lượt truy cập trong tuần</p>
+                                <p class="card-title counter">1000
+                                <p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-footer ">
+                    <hr>
+                    <div class="stats">
+                        <i class="fa fa-clock-o"></i> Chi tiết
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+@section myscript{
+    <script>https://maps.googleapis.com/maps/api/js?key=AIzaSyDJx44jiP9QHAeOec2C0aLW29jiL6OQyRU&libraries=places&fbclid=IwAR0v2slyzwlJ5ObtN8xpVdTeok2WP7vPm_n87Mq7fWkaJWfv3HJqugIcHCg</script>
+    <script>
+        $(document).ready(function ($) {
+            $('.counter').counterUp({
+                delay: 10,
+                time: 1000
+            });
+        });
+    </script>
+    <script src="~/Areas/Admin/Content_Admin/js/jquery.waypoints.min.js"></script>
+    <script src="~/Areas/Admin/Content_Admin/js/jquery.counterup.min.js"></script>
+}

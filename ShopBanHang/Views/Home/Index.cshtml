@@ -1,0 +1,171 @@
+﻿
+@{
+    ViewBag.Title = "Thời trang 360 - Shop thời trang được ưa chuộng nhất hiện nay";
+    Layout = "~/Views/Shared/_layout.cshtml";
+}
+@{ 
+    var product = ViewBag.product as List<ShopBanHang.Models.displayProduct>;
+}
+<!--/.Carousel Wrapper-->
+<!--Main layout-->
+@section mycss{
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css" />
+
+}
+<span style="width:400px;position:relative;left:950px;bottom:20px" id="id_cart"></span>
+<div class="container" style="background-color:white">
+
+    <!--Navbar-->
+    <nav style="background-color:#8fa1c7" class="navbar navbar-expand-lg navbar-dark mdb-color lighten-3 mt-3 mb-5">
+
+        <!-- Navbar brand -->
+        <span class="navbar-brand">Danh mục:</span>
+
+        <!-- Collapse button -->
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#basicExampleNav"
+                aria-controls="basicExampleNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <!-- Collapsible content -->
+        <div class="collapse navbar-collapse" id="basicExampleNav">
+
+            <!-- Links -->
+            <ul class="navbar-nav mr-auto">
+                <li class="nav-item">
+                    <a class="nav-link" href="#">
+                        Tất cả
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" id="new_product" href="#">Sản phẩm mới</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" id="product_max" href="#">Sản phẩm bán chạy nhất</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" id="product_max" href="#">Sản phẩm giảm giá</a>
+                </li>
+
+            </ul>
+            <!-- Links -->
+
+            <form class="form-inline">
+                <div class="md-form my-0">
+                    <input class="form-control mr-sm-2 searchProduct" type="text" placeholder="Tìm kiếm tại đây" aria-label="Search">
+                    <ul class="list-group" style="position:absolute;z-index:1000">
+                    </ul>
+                </div>
+            </form>
+            
+        </div>
+    </nav>
+    <section class="text-center mb-4">
+ 
+        <div class="row wow fadeIn">
+            @foreach (var item in product)
+            {
+                <div class="col-lg-3 col-md-6 mb-3">
+                    
+                        <!--Card-->
+                        <div class="card">
+
+                            <!--Card image-->
+                            <div class="view overlay">
+                                <img src="@item.Image_Product" class="card-img-top" alt="">
+                                <a>
+                                    <div class="mask rgba-white-slight"></div>
+                                </a>
+                            </div>
+                            <div class="card-body text-center">
+                                <!--Category & Title-->
+                                <a href="#" class="grey-text">
+                                    <h5>@item.Name_Category</h5>
+                                </a>
+                                <h5>
+                                    <a href="/DetailProduct/Index?ID=@item.ID_Product" class="dark-grey-text">@item.Name_Product</a>
+
+                                </h5>
+
+                                <h4 class="font-weight-bold blue-text">
+                                    <strong>@item.Current_Price</strong>
+                                    @{
+                                        if (item.New_Product == true)
+                                        {<span class="badge badge-danger">New</span>}
+                                    }
+
+                                </h4>
+                                
+                                <span id="id_product" style="display:none">@item.ID_Product</span>
+                                <a href="/DetailProduct/Index?ID=@item.ID_Product" class="btn btn-danger"> Xem chi tiết sản phẩm  <i class="fa fa-cart-plus"></i></a>
+                            </div>
+
+                        </div>
+                </div>
+              
+            }
+        </div>
+
+    </section>
+    <nav class="d-flex justify-content-center wow fadeIn">
+        <ul class="pagination pg-blue">
+
+            <!--Arrow left-->
+            <li class="page-item disabled">
+                <a class="page-link" href="#" aria-label="Previous">
+                    <span aria-hidden="true">&laquo;</span>
+                    <span class="sr-only">Previous</span>
+                </a>
+            </li>
+            <li class="page-item active">
+                <a class="page-link" href="/Home/Index?page=1">
+                    1
+                </a>
+            </li>
+
+            <li class="page-item">
+                <a class="page-link" href="/Home/Index?page=2">2</a>
+            </li>
+            <li class="page-item">
+                <a class="page-link" href="/Home/Index?page=3">3</a>
+            </li>
+            <li class="page-item">
+                <a class="page-link" href="#" aria-label="Next">
+                    <span aria-hidden="true">&raquo;</span>
+                    <span class="sr-only">Next</span>
+                </a>
+            </li>
+        </ul>
+    </nav>
+    <!--Pagination-->
+   
+</div>
+@section myscript{
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
+    <script>
+        $(document).ready(function (){
+            $(".searchProduct").keyup(function () {
+                var product = $(this).val();
+                $(".list-group").html("");
+                $.ajax({
+                    url: "/Home/Search",
+                    success: function (result) {
+                        result.map(function (val) {
+                    
+                            if (val.Name_Product.toLowerCase().indexOf(product.toLowerCase()) !== -1 && product != "") {
+                                $(".list-group").append('<li class="list-group-item"> <img src="'+val.Image_Product+'" alt="" width="30" class="img-fluid rounded shadow-sm"><span class="" > <a href="/DetailProduct/Index?ID='+val.ID_Product+'">'+val.Name_Product +'</a>  </span> </li>');   
+                            }
+                           
+                        })
+                    }
+                })
+            })
+            var page = Number( window.location.href.charAt(Number(window.location.href.length) - 1))+1;
+            $("ul li").removeClass("active");
+            $('ul li:nth-child(' + page + ')').addClass("active");
+            
+           
+        });
+    </script>
+
+}

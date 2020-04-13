@@ -1,0 +1,48 @@
+﻿
+@{
+    ViewBag.Title = "SignUp";
+    Layout = "~/Views/Shared/_layout.cshtml";
+}
+<link href="~/Content/css/css_login.css" rel="stylesheet" />
+<div class="container">
+    <div class="row">
+        <div class="col-sm-9 col-md-7 col-lg-5 mx-auto">
+            <div class="card card-signin my-5">
+                <div class="card-body">
+                    @{ 
+                        if(ViewBag.Error != null)
+                        {
+                            <div class="alert alert-info" style="text-align:center">@ViewBag.Error</div>
+                        }
+                    }
+                    <h5 class="card-title text-center">Tạo tài khoản</h5>
+                    <form class="form-signup" method="post" action="/Account/SignUp">
+                        <div class="form-label-group">
+                            <input class="form-control" name="Name_Member" id="inputname" placeholder="Họ và tên" required autofocus>
+                            <label for="inputname">Họ và tên </label>
+                        </div>
+                        <div class="form-label-group">
+                            <input class="form-control" id="inputphone" name="Phone_Member" placeholder="Số điện thoại" required autofocus>
+                            <label for="inputphone">Số điện thoại</label>
+                        </div>
+                        <div class="form-label-group">
+                            <input type="email" id="inputEmail" class="form-control" name="Email" placeholder="Email" required autofocus>
+                            <label for="inputEmail">Email</label>
+                        </div>
+
+                        <div class="form-label-group">
+                            <input type="password" name="Password" id="inputPassword" class="form-control" placeholder="Mật khẩu" required>
+                            <label for="inputPassword">Mật khẩu</label>
+                        </div>
+                        <div class="form-label-group">
+                            <input type="password" name="ConfirmPassword" id="inputConfirmPassword" class="form-control" placeholder="Xác nhận mật khẩu" required>
+                            <label for="inputConfirmPassword">Xác nhận mật khẩu</label>
+                        </div>
+                        <button class="btn btn-lg btn-primary btn-block text-uppercase" type="submit">Đăng ký</button>
+                        <hr class="my-4">
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

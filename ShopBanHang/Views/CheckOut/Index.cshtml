@@ -1,0 +1,87 @@
+﻿
+@{
+    ViewBag.Title = "Tiến hành đặt hàng";
+    Layout = "~/Views/Shared/_layout.cshtml";
+}
+@{
+    var province = ViewBag.province as List<ShopBanHang.Database.Province>;
+}
+<link href="~/Content/css/css_login.css" rel="stylesheet" />
+<div class="container">
+    <div class="row">
+        <div class="col-sm-9 col-md-7 col-lg-5 mx-auto">
+            <div class="card card-signin my-5">
+                <div class="card-body">
+                    <h5 class="card-title text-center">Tiến hành đặt hàng</h5>
+                    <form class="form-signup" method="post" action="/CheckOut/Index">
+                        <div class="form-group">
+                            <label for="inputname">Họ và tên </label>
+                            <input class="form-control" name="Name" id="inputname" placeholder="Họ và tên" required autofocus>
+
+                        </div>
+                        <div class="form-group">
+                            <label for="inputphone">Số điện thoại</label>
+                            <input class="form-control" name="Phone" id="inputphone" placeholder="Số điện thoại" required autofocus>
+
+                        </div>
+                        <div class="form-group">
+                            <label for="inputEmail">Email</label>
+                            <input type="email" name="Email" id="inputEmail" class="form-control" placeholder="Email address" required autofocus>
+
+                        </div>
+                        <div class="form-group">
+                            <label for="inputProvince">Tỉnh/Thành phố</label>
+                            <select class="form-control" name="Address_Province" id="inputProvince">
+                                <option value=0>Lựa chọn</option>
+                                @foreach (var item in province)
+                                {
+                                    <option value="@item.ID_Province">@item.Name_Province</option>
+                                }
+                            </select>
+                        </div>
+
+
+                        <div class="form-group">
+                            <label for="inputDistrict">Quận/Huyện/Thị xã</label>
+                            <select class="form-control" name="Address_District" id="inputDistrict">
+                                <option value="0">Lựa chọn</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="inputDetail">Số nhà_Khu phố_Phường/Xã</label>
+                            <input type="text" id="inputDetail" name="Address_Detail" class="form-control" placeholder="Số nhà_Đường_Phường" required>
+
+                        </div>
+                        <div class="form-group">
+                            <label for="inputNote">Ghi chú</label>
+                            <input type="text" id="inputNote" name="Note" class="form-control" placeholder="Ghi chú">
+
+                        </div>
+                        <button class="btn btn-lg btn-primary btn-block text-uppercase" type="submit">Đặt hàng</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+@section myscript{
+    <script>
+        $(document).ready(function () {
+            $("#inputProvince").change(function () {
+                var id_province = $("#inputProvince").val();
+                $.ajax({
+                    url: "/CheckOut/District?ID_Province=" + id_province,
+                    data: { id_province: id_province },
+                    success: function (result) {
+                        var district = [];
+                        district.push("<option value=0>Lựa chọn</option >");
+                        result.map(function (val) {
+                            district.push('<option value="'+ val.Name_District +'">' + val.Name_District + '</option >');
+                        })
+                        $("#inputDistrict").html(district);
+                    }
+                })
+            })
+        })
+    </script>
+}

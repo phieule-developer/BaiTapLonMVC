@@ -1,0 +1,131 @@
+﻿
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_layout.cshtml";
+}
+@{
+    var MenProduct = ViewBag.MenProduct as List<ShopBanHang.Models.displayProduct>;
+}
+@section mycss{
+
+    <link href="~/Content/css/price_rangs.css" rel="stylesheet" />
+
+}
+<div class="container-fluid" style="background-color:white">
+    <br />
+    <br />
+    <br />
+    <br />
+    <div class="row">
+        <div class="col-lg-2">
+            <div class="left_sidebar_area">
+                <div class="l_w_title">
+                    <h3>Lọc sản phẩm</h3>
+                    <h3>Mức giá</h3>
+                </div>
+                <div class="widgets_inner">
+                    <ul class="list">
+
+                        <li>
+                            <input type="checkbox" aria-label="Radio button for following text input">
+                            <a href="#">0-200.000.000</a>
+                        </li>
+                        <li>
+                            <input type="checkbox" aria-label="Radio button for following text input">
+                            <a href="#">200.000-300.000</a>
+                        </li>
+                        <li>
+                            <input type="checkbox" aria-label="Radio button for following text input">
+                            <a href="#">300.000-500.000</a>
+                        </li>
+                        <li>
+                            <input type="checkbox" aria-label="Radio button for following text input">
+                            <a href="#"> >500.000</a>
+                        </li>
+                    </ul>
+
+                </div>
+
+
+            </div>
+            <aside class="left_widgets p_filter_widgets price_rangs_aside sidebar_box_shadow">
+                <div class="l_w_title">
+                    <h3>Price Filter</h3>
+                </div>
+                <div class="widgets_inner">
+                    <div class="range_item">
+                        <!-- <div id="slider-range"></div> -->
+                        <input type="text" class="js-range-slider" value="" />
+                        <div class="d-flex align-items-center">
+                            <div class="price_text">
+                                <p>Price :</p>
+                            </div>
+                            <div class="price_value d-flex justify-content-center">
+                                <input type="text" class="js-input-from" id="amount" readonly />
+                                <span>to</span>
+                                <input type="text" class="js-input-to" id="amount" readonly />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </aside>
+        </div>
+        <div class="col-lg-10">
+            <div class="row">
+                <div class="col-lg-9">
+                    <div class="product_top_bar d-flex justify-content-between align-items-center">
+                        <div class="single_product_menu product_bar_item">
+                            <h2>Thời trang nam</h2>
+                        </div>
+
+                    </div>
+                </div>
+                <div class="col-lg-3">
+                    <div class="dropdown">
+                        <button class="btn btn-info dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            Sắp xếp theo
+                        </button>
+                        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                            <a class="dropdown-item" href="#">Bán chạy nhất</a>
+                            <a class="dropdown-item" href="#">Giá từ cao xuống thấp</a>
+                            <a class="dropdown-item" href="#">Giá từ thấp lên cao</a>
+                        </div>
+                    </div>
+                </div>
+                @foreach (var item in MenProduct)
+                {
+                    <div class="col-lg-3 col-md-6 mb-3">
+
+                        <!--Card-->
+                        <div class="card">
+
+                            <!--Card image-->
+                            <div class="view overlay">
+                                <img src="@item.Image_Product" class="card-img-top" alt="">
+                                <a>
+                                    <div class="mask rgba-white-slight"></div>
+                                </a>
+                            </div>
+                            <div class="card-body text-center">
+                                <!--Category & Title-->
+                                <h5>
+                                    <a href="/DetailProduct/Index?ID=@item.ID_Product" class="dark-grey-text">@item.Name_Product</a>
+
+                                </h5>
+
+                                <h4 class="font-weight-bold blue-text">
+                                    <strong>@item.Current_Price</strong>
+                                </h4>
+                                <span id="id_product" style="display:none">@item.ID_Product</span>
+                                <a href="#" class="btn btn-primary"> Thêm vào giỏ hàng <i class="fa fa-cart-plus"></i></a>
+                            </div>
+
+                        </div>
+                    </div>
+
+                }
+
+            </div>
+        </div>
+    </div>
+</div>

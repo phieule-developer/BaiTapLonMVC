@@ -1,0 +1,40 @@
+﻿@{
+    ViewBag.Title = "Danh sách đơn hàng - Thời trang 360";
+    Layout = "~/Areas/Admin/Views/Shared/Layout_Admin.cshtml";
+}
+@{ 
+    var OrderInfo = ViewBag.infoOrder as List<ShopBanHang.Database.Order>;
+    var i = 1;
+}
+    <div class="col col-xl-12">
+        <div class="table-responsive">
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th>Số thứ tự</th>
+                        <th>Mã đơn hàng</th>
+                        <th>Họ và tên</th>
+                        <th>Địa chỉ</th>
+                        <th>Số điện thoại</th>
+                        <th>Ngày đặt</th>
+                        <th>Hành động</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @{ foreach (var item in OrderInfo)
+                        {
+                    <tr>
+                        <td>@(i++)</td>
+                        <td>@item.ID_Order</td>
+                        <td>@item.Name</td>
+                        <td>@item.Address_Detail _ @item.Address_District _ @item.Address_Province</td>
+                        <td>@item.Phone</td>
+                        <td>@item.Date_Order</td>
+                        <td><a href="/Admin/OrderedList/DetailOrder?ID_Order=@item.ID_Order" class="btn btn-success">Xem chi tiết</a></td>
+                    </tr>
+                            }
+                        }
+                </tbody>
+            </table>
+        </div>
+    </div>

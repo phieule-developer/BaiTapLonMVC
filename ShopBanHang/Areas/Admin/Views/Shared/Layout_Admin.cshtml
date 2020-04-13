@@ -1,0 +1,163 @@
+﻿@{
+    Layout = null;
+}
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>@ViewBag.Title</title>
+    <meta content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0, shrink-to-fit=no' name='viewport' />
+    <link href="https://fonts.googleapis.com/css?family=Montserrat:400,700,200" rel="stylesheet" />
+
+    <link href="~/Areas/Admin/Content_Admin/css/bootstrap.min.css" rel="stylesheet" />
+    <link href="~/Areas/Admin/Content_Admin/css/paper-dashboard.css?v=2.0.0" rel="stylesheet" />
+    <link href="~/Areas/Admin/Content_Admin/demo/demo.css" rel="stylesheet" />
+    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/latest/css/font-awesome.min.css" rel="stylesheet">
+</head>
+<body>
+    <div class="wrapper ">
+        <div class="sidebar" data-color="blue" data-active-color="danger">
+            <!--
+                Tip 1: You can change the color of the sidebar using: data-color="blue | green | orange | red | yellow"
+            -->
+            <div class="logo">
+                <a href="#" class="simple-text logo-mini">
+                    <div class="logo-image-small">
+                        <img src="~/Areas/Admin/Content_Admin/img/tải xuống.jpg" />
+                       
+                    </div>
+                </a>
+                <a href="/Admin/Home/Index" class="simple-text logo-normal">
+                    Thời trang 360
+                </a>
+
+            </div>
+            <div class="sidebar-wrapper">
+                <ul class="nav">
+                    <li>
+                        <a href="/Admin/Home/Index">
+                            <i class="nc-icon nc-hat-3"></i>
+                            <p>Trang chủ</p>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="/Admin/OrderingList/Index">
+                            <i class="nc-icon nc-pin-3"></i>
+                            <p>Đơn hàng đang chờ</p>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="/Admin/OrderedList/Index">
+                            <i class="nc-icon nc-bank"></i>
+                            <p>Danh sách đơn hàng</p>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="/Admin/UserList/Index">
+                            <i class="nc-icon nc-app"></i>
+                            <p>Danh sách khách hàng</p>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="/Admin/Inventory/Index">
+                            <i class="nc-icon nc-diamond"></i>
+                            <p>Kho</p>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="/Admin/AddProduct/Index">
+                            <i class="nc-icon nc-badge"></i>
+                            <p>Nhập kho</p>
+                        </a>
+                    </li>
+
+                    <li>
+                        <a href="/Admin/Statistic/Index">
+                            <i class="nc-icon nc-app"></i>
+                            <p>Báo cáo thống kê</p>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <div class="main-panel">
+            <!-- Navbar -->
+            <nav class="navbar navbar-expand-lg navbar-absolute fixed-top navbar-transparent">
+                <div class="container-fluid">
+                    <div class="navbar-wrapper">
+                        <div class="navbar-toggle">
+                            <button type="button" class="navbar-toggler">
+                                <span class="navbar-toggler-bar bar1"></span>
+                                <span class="navbar-toggler-bar bar2"></span>
+                                <span class="navbar-toggler-bar bar3"></span>
+                            </button>
+                        </div>
+                        <h2 class="navbar-brand">Quản Lý Cửa Hàng</h2>
+                    </div>
+                    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navigation" aria-controls="navigation-index" aria-expanded="false" aria-label="Toggle navigation">
+                        <span class="navbar-toggler-bar navbar-kebab"></span>
+                        <span class="navbar-toggler-bar navbar-kebab"></span>
+                        <span class="navbar-toggler-bar navbar-kebab"></span>
+                    </button>
+                    <div class="collapse navbar-collapse justify-content-end" id="navigation">
+                        <form>
+                            <div class="input-group no-border">
+                                <input type="text" value="" class="form-control" placeholder="Search...">
+                                <div class="input-group-append">
+                                    <div class="input-group-text">
+                                        <i class="nc-icon nc-zoom-split"></i>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                        <span> &nbsp;&nbsp;  Phiêu &nbsp;&nbsp;</span>
+                        <ul class="navbar-nav">
+                            <li class="nav-item btn-rotate dropdown">
+                                <a class="nav-link dropdown-toggle" href="http://example.com" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    <i class="nc-icon nc-settings-gear-65"></i>
+                                    <p>
+                                        <span class="d-lg-none d-md-block">Some Actions</span>
+                                    </p>
+                                </a>
+
+                                <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownMenuLink">
+                                    <a class="dropdown-item" href="#">Đổi mật khẩu</a>
+                                    <a class="dropdown-item" href="/Account/LogOut">Đăng xuất</a>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </nav>
+            <div class="content">
+                <div class="row">
+                    @RenderBody()
+                </div>
+            </div>
+           
+            <!-- Footer -->
+            <footer class="page-footer font-small blue" style="background-color:#a5a3bd8f">
+
+                <!-- Copyright -->
+                <div  class="footer-copyright text-center py-3">
+                    © 2018 Copyright:
+                    <a style="color:#ce5151" href="#"> Lê Văn Phiêu</a>
+                </div>
+                <!-- Copyright -->
+
+            </footer>
+            <!-- Footer -->
+        </div>
+    </div>
+    <!--   Core JS Files   -->
+    <script src="~/Areas/Admin/Content_Admin/js/core/jquery.min.js"></script>
+    <script src="~/Areas/Admin/Content_Admin/js/core/popper.min.js"></script>
+    <script src="~/Areas/Admin/Content_Admin/js/core/bootstrap.min.js"></script>
+    <script src="~/Areas/Admin/Content_Admin/js/plugins/perfect-scrollbar.jquery.min.js"></script>
+    <script src="~/Areas/Admin/Content_Admin/js/plugins/chartjs.min.js"></script>
+    <script src="~/Areas/Admin/Content_Admin/js/plugins/bootstrap-notify.js"></script>
+    <script src="~/Areas/Admin/Content_Admin/js/paper-dashboard.min.js?v=2.0.0" type="text/javascript"></script>
+    <script src="~/Areas/Admin/Content_Admin/demo/demo.js"></script>
+    @RenderSection("myscript",false)
+</body>
+</html>
