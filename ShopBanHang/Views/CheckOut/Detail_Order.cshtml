@@ -4,22 +4,11 @@
     Layout = "~/Views/Shared/_layout.cshtml";
 }
  <script src="~/Content/js/jquery-1.12.1.min.js "></script>
-<script>
-    var data = localStorage.getItem("cart")
-    console.log("vào đây")
-    $.ajax({
-        url: "/CheckOut/Detail_Order?cart=" + data,
-        type: "POST",
-        success: function () {
-
-        }
-    })
-</script>
 @{
     var order_detail = ViewBag.detailOrder as List<ShopBanHang.Models.ConfirmOrder>;
 }
     <div class="content">
-        @if (order_detail != null)
+        @if (order_detail.Count >0)
         {
             <hr />
             <br />
